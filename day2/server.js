@@ -4,7 +4,7 @@ const app = express();
 const db = require('./db');
 const bodyParser = require('body-parser');
 const Person = require('./models/Person');
-const MenuItem = require('./models/MenuItem');
+
 
 
 const port = 3000;
@@ -96,6 +96,11 @@ app.put('/person', async(req, res) => {
     });
 }
 });
+
+
+const menuRoute = require('./routes/menuRoutes');
+
+ app.use('/menu', menuRoute);
 
 
 
