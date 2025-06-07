@@ -81,6 +81,31 @@ app.get('/person', async(req, res) => {
 }
 });
 
+ app.get('/person/:worktype', async(req,res)=>{
+
+  try{
+    const worktype = req.params.worktype;  // get to the person type
+
+    if(worktype == 'chef' || worktype == 'waiter' || worktype == 'manager'){
+          const data = await Person.find({work: worktype});
+       return res.status(200).json({
+      success: true,
+      msg: 'get data user worktype successfully!',
+      user: data,
+    });
+
+    }else{
+      res.status(400).json({
+      success: false,
+      msg: error,
+    });
+    }
+  }catch{}
+    
+ })
+
+  
+
 app.put('/person', async(req, res) => {
    try{
       const data = await Person.find();
