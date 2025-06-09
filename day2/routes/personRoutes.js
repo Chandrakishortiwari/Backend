@@ -93,21 +93,56 @@ router.get('/', async(req, res) => {
 
   
 
-router.put('/', async(req, res) => {
+// router.put('/', async(req, res) => {
+//    try{
+//       const data = await Person.find();
+//        return res.status(200).json({
+//       success: true,
+//       msg: 'Registered successfully!',
+//       user: data,
+//     });
+//    }catch(error){
+//           return res.status(400).json({
+//       success: false,
+//       msg: error, // Corrected the typo here ('tao' to 'to')
+//     });
+// }
+// });
+
+// use put method and upadata value refrence bu id
+
+  router.put('/:id', async (req,res)=>{
    try{
-      const data = await Person.find();
-       return res.status(200).json({
-      success: true,
-      msg: 'Registered successfully!',
-      user: data,
+    const id = req.params.id;
+    const updatedPerson = req.body;
+    const response = await Person.findByIdAndUpdate(id, updatedPerson,{
+      new:true,  // return the update document 
+      runValidators:true, // mongodb ke schema ka validatinchek kre ga
     });
-   }catch(error){
-          return res.status(400).json({
+
+    if(!response){
+      res.status(404).json({
       success: false,
-      msg: error, // Corrected the typo here ('tao' to 'to')
+      msg: "person is null",
     });
-}
-});
+    }
+
+    return res.status(200).json({
+      success: true,
+      msg: 'updation completed successfully!',
+      user: response,
+    });
+
+
+
+
+   }catch(error){
+  return res.status(400).json({
+      success: false,
+      msg: error.message, // Corrected the typo here ('tao' to 'to')
+    });
+   }
+  } )
 
 
 module.exports = router;  
