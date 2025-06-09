@@ -38,7 +38,34 @@ const MenuItem = require('../models/MenuItem');
       msg: error, // Corrected the typo here ('tao' to 'to')
     });
 }
- })
+ });
+
+
+  router.get('/:tastchoice', async(req, res)=>{
+    try{
+      const tastchoice = req.params.tastchoice;
+      if(tastchoice == 'sweet' || tastchoice == 'spice' || tastchoice =="sour"){
+      const data =await MenuItem.find({taste:tastchoice});
+       return res.status(200).json({
+      success: true,
+      msg: ' Data Feched  successfully!',
+      user: data,
+    });
+      }else{
+      res.status(400).json({
+      success: false,
+      msg: error,
+    });
+    }
+      
+
+    }catch(error){
+ return res.status(400).json({
+      success: false,
+      msg: error, // Corrected the typo here ('tao' to 'to')
+    });
+    }
+  })
 
 
  module.exports = router;  
